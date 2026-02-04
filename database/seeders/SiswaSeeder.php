@@ -1,10 +1,10 @@
 <?php
 
 namespace Database\Seeders;
-
+use App\Models\Siswa;
+use Faker\Factory as Faker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Siswa;
 
 class SiswaSeeder extends Seeder
 {
@@ -13,36 +13,20 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        Siswa::create([
-            'nis' => '5544332211',
-            'nama' => 'Dewi Kartika',
-            'kelas' => '10B',
-            'alamat' => 'Jl. Diponegoro No. 4',
-            'no_hp' => '085544332211',
-        ]);
-
-        Siswa::create([
-            'nis' => '6677889900',
-            'nama' => 'Rina Susanti',
-            'kelas' => '11A',
-            'alamat' => 'Jl. Gatot Subroto No. 5',
-            'no_hp' => '086677889900',
-        ]);
-
-        Siswa::create([
-            'nis' => '0099887766',
-            'nama' => 'Agus Suratna',
-            'kelas' => '12B',
-            'alamat' => 'Jl. Sisingamangaraja No. 6',
-            'no_hp' => '080099887766',
-        ]);
-
-        Siswa::create([
-            'nis' => '3344556677',
-            'nama' => 'Lina Marlina',
-            'kelas' => '10C',
-            'alamat' => 'Jl. Pahlawan No. 7',
-            'no_hp' => '083344556677',
-        ]);
+        $faker = Faker::create('id_ID');
+        
+        $kelas = ['X RPL 1', 'X RPL 2', 'XI RPL 1', 'XI RPL 2', 'XII RPL 1', 'XII RPL 2', 
+                  'X TKJ 1', 'XI TKJ 1', 'XII TKJ 1', 'X MM 1', 'XI MM 1', 'XII MM 1'];
+        
+        for ($i = 1; $i <= 30; $i++) {
+            Siswa::create([
+                'nis' => $faker->unique()->numerify('2024####'),
+                'nama' => $faker->name(),
+                'kelas' => $faker->randomElement($kelas),
+                'alamat' => $faker->address(),
+                'no_hp' => $faker->numerify('08##########'),
+            ]);
+        }
+        $this->command->info('✅ 30 Siswa berhasil ditambahkan!');
     }
 }
