@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Penerbit extends Model
+{
+    protected $table = 'tbl_penerbit';
+    protected $primaryKey = 'id_penerbit';
+    protected $fillable = [
+                            'id_penerbit',
+                            'nama_penerbit',
+                            'asal_kota',
+                            'isbn',
+    ];
+    public function buku()
+    {
+        return $this->hasMany(Buku::class, 'id_penerbit', 'id_penerbit');
+    }
+}
