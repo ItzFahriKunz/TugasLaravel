@@ -1,24 +1,33 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Penulis;
 
+use App\Models\Penulis;
 use Illuminate\Http\Request;
 
 class PenulisController extends Controller
 {
-  public function penulistampil()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
         $datapenulis = Penulis::all();
-        return view('penulis/penulistampil', ['datapenulis' => $datapenulis]);
+        return view('penulis.penulistampil', ['datapenulis' => $datapenulis]);
     }
 
-    public function penulistambah()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return view('penulis/penulistambah');
+        return view('penulis.penulistambah');
     }
 
-    public function penulisstore(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         Penulis::create([
             'nama_penulis' => $request->nama_penulis,
@@ -28,15 +37,29 @@ class PenulisController extends Controller
         return redirect('/penulis');
     }
 
-    public function penulisedit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Penulis $penulis)
     {
-        $penulis = Penulis::where('id_penulis', $id)->first();
-        return view('penulis/penulisedit', ['penulis' => $penulis]);
+        //
     }
 
-    public function penulisupdate(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
-        Penulis::where('id_penulis', $request->id_penulis)->update([
+        $penulis = Penulis::where('id_penulis', $id)->firstOrFail();
+        return view('penulis.penulisedit', ['penulis' => $penulis]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        Penulis::where('id_penulis', $id)->update([
             'nama_penulis' => $request->nama_penulis,
             'no_hp_penulis' => $request->no_hp_penulis
         ]);
@@ -44,7 +67,10 @@ class PenulisController extends Controller
         return redirect('/penulis');
     }
 
-    public function penulushapus($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
     {
         Penulis::where('id_penulis', $id)->delete();
         return redirect('/penulis');

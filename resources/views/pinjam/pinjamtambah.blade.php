@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/crudstyle.css') }}">
     <style>
-       
+
     </style>
 </head>
 <body class="form-page">
@@ -21,7 +21,7 @@
         <p class="text-muted mb-4">Isi formulir di bawah untuk mencatat peminjaman buku</p>
     </div>
 
-    <form action="/pinjam/store" method="POST" id="formPinjam">
+    <form action="/pinjam" method="POST" id="formPinjam">
         @csrf
 
         <div class="mb-4">
@@ -56,7 +56,7 @@
             <label class="form-label">
                 <strong>📅 Tanggal Pinjam</strong> <span class="text-danger">*</span>
             </label>
-            <input type="date" name="waktu_pinjam" class="form-control" 
+            <input type="date" name="waktu_pinjam" class="form-control"
                    value="{{ date('Y-m-d') }}" required>
         </div>
 
@@ -64,30 +64,30 @@
             <label class="form-label">
                 <strong>📖 Pilih Buku yang Dipinjam</strong> <span class="text-danger">*</span>
             </label>
-            
+
             <div class="selected-count" id="selectedCount">
                 Dipilih: <strong>0</strong> buku
             </div>
 
             <div class="search-box">
-                <input type="text" 
-                       id="searchBook" 
-                       class="form-control" 
+                <input type="text"
+                       id="searchBook"
+                       class="form-control"
                        placeholder="🔍 Cari judul buku...">
             </div>
 
             <div class="book-selection-container" id="bookContainer">
                 @foreach ($databuku as $buku)
                 <div class="book-item" data-book-title="{{ strtolower($buku->judul_buku) }}">
-                    <input type="checkbox" 
-                           name="id_buku[]" 
-                           value="{{ $buku->id_buku }}" 
+                    <input type="checkbox"
+                           name="id_buku[]"
+                           value="{{ $buku->id_buku }}"
                            id="book_{{ $buku->id_buku }}"
                            class="book-checkbox">
                     <label for="book_{{ $buku->id_buku }}" class="book-info mb-0" style="cursor: pointer;">
                         <div class="book-title">{{ $buku->judul_buku }}</div>
                         <div class="book-stock">
-                            Stok: <strong>{{ $buku->stok_buku }}</strong> | 
+                            Stok: <strong>{{ $buku->stok_buku }}</strong> |
                             Penulis: {{ $buku->penulis->nama_penulis ?? '-' }}
                         </div>
                     </label>

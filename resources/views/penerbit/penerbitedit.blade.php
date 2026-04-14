@@ -10,7 +10,7 @@
 <body class="form-page">
     <div class="container p-5" style="max-width: 600px;">
         <a href="/penerbit" class="back-link">← Kembali ke Daftar Penerbit</a>
-        
+
         <div class="form-icon">✏️</div>
         <h1 class="mb-2">Edit Data Penerbit</h1>
         <p class="form-description">Perbarui data penerbit sesuai kebutuhan</p>
@@ -19,9 +19,10 @@
             📋 Mengedit data penerbit: <strong>{{ $penerbit->nama_penerbit }}</strong>
         </div>
 
-        <form action="/penerbit/update" method="post">
+        <form action="/penerbit" method="post">
             @csrf
-            
+            @method('PUT')
+
             <div class="mb-3">
                 <label for="nama_penerbit" class="form-label"><strong>Nama Penerbit</strong></label>
                 <input type="text" class="form-control" id="nama_penerbit" name="nama_penerbit" value="{{ $penerbit->nama_penerbit }}" required>

@@ -10,14 +10,14 @@
 <body class="form-page">
     <div class="container p-5" style="max-width: 600px;">
         <a href="/siswa" class="back-link">← Kembali ke Daftar Siswa</a>
-        
+
         <div class="form-icon">📝</div>
         <h1 class="mb-2">Tambah Data Siswa</h1>
         <p class="form-description">Lengkapi formulir di bawah ini</p>
 
-        <form action="/siswa/store" method="POST">
+        <form action="/siswa" method="POST">
             @csrf
-            
+
             <div class="mb-3">
                 <label for="nis" class="form-label"><strong>NIS (Nomor Induk Siswa)</strong></label>
                 <input type="text" class="form-control" id="nis" name="nis" placeholder="Masukkan NIS" required>

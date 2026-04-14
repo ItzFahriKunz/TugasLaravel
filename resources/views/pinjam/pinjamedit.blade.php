@@ -7,7 +7,7 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/crudstyle.css') }}">
     <style>
-        
+
     </style>
 </head>
 <body class="form-page">
@@ -23,13 +23,15 @@
 
     <div class="alert alert-info mb-4">
         <strong>📋 Data Saat Ini:</strong><br>
-        Siswa: <strong>{{ $pinjam->siswa->nama }}</strong> | 
+        Siswa: <strong>{{ $pinjam->siswa->nama }}</strong> |
         Tanggal: <strong>{{ \Carbon\Carbon::parse($pinjam->waktu_pinjam)->format('d M Y') }}</strong> |
         Jumlah Buku: <strong>{{ count($pinjam->pinjamdetail) }}</strong>
     </div>
 
-    <form action="/pinjam/update" method="POST" id="formPinjam">
+    <form action="/pinjam" method="POST" id="formPinjam">
         @csrf
+        @method('PUT')
+        
         <input type="hidden" name="id_pinjam" value="{{ $pinjam->id_pinjam }}">
 
         <div class="mb-4">
@@ -72,15 +74,15 @@
             <label class="form-label">
                 <strong>📖 Pilih Buku yang Dipinjam</strong> <span class="text-danger">*</span>
             </label>
-            
+
             <div class="selected-count" id="selectedCount">
                 Dipilih: <strong>0</strong> buku
             </div>
 
             <div class="search-box">
-                <input type="text" 
-                       id="searchBook" 
-                       class="form-control" 
+                <input type="text"
+                       id="searchBook"
+                       class="form-control"
                        placeholder="🔍 Cari judul buku...">
             </div>
 
@@ -90,18 +92,18 @@
                 @endphp
 
                 @foreach ($databuku as $buku)
-                <div class="book-item {{ in_array($buku->id_buku, $selectedBooks) ? 'selected' : '' }}" 
+                <div class="book-item {{ in_array($buku->id_buku, $selectedBooks) ? 'selected' : '' }}"
                      data-book-title="{{ strtolower($buku->judul_buku) }}">
-                    <input type="checkbox" 
-                           name="id_buku[]" 
-                           value="{{ $buku->id_buku }}" 
+                    <input type="checkbox"
+                           name="id_buku[]"
+                           value="{{ $buku->id_buku }}"
                            id="book_{{ $buku->id_buku }}"
                            class="book-checkbox"
                            {{ in_array($buku->id_buku, $selectedBooks) ? 'checked' : '' }}>
                     <label for="book_{{ $buku->id_buku }}" class="book-info mb-0" style="cursor: pointer;">
                         <div class="book-title">{{ $buku->judul_buku }}</div>
                         <div class="book-stock">
-                            Stok: <strong>{{ $buku->stok_buku }}</strong> | 
+                            Stok: <strong>{{ $buku->stok_buku }}</strong> |
                             Penulis: {{ $buku->penulis->nama_penulis ?? '-' }}
                         </div>
                     </label>

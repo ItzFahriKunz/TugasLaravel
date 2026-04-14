@@ -15,12 +15,12 @@
         </div>
 
         <a href="/index" class="back-link mb-3 d-inline-block">← Kembali ke Home</a>
-        
+
         <div class="header-actions d-flex justify-content-between align-items-center mb-4">
             <div class="text-muted">
                 <strong>Total Buku:</strong> {{ count($databuku) }} judul
             </div>
-            <a href="/buku/tambah" class="btn btn-primary">
+            <a href="/buku/create" class="btn btn-primary">
                 <strong>+</strong> Tambah Buku Baru
             </a>
         </div>
@@ -57,17 +57,18 @@
                         <td>{{ $isiBuku->penerbit->nama_penerbit }}</td>
                         <td>
                             <div class="action-buttons text-center justify-content-center">
-                                <a href="/buku/edit/{{ $isiBuku->id_buku }}" 
+                                <a href="/buku/{{ $isiBuku->id_buku }}/edit"
                                    class="btn btn-success btn-sm"
                                    title="Edit data">
                                     ✏️ Edit
                                 </a>
-                                <a href="/buku/hapus/{{ $isiBuku->id_buku }}" 
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus data {{ $isiBuku->judul_buku }}?')"
-                                   title="Hapus data">
-                                    🗑️ Hapus
-                                </a>
+                                <form action="/buku/{{ $isiBuku->id_buku }}" method="POST" class="d-inline-block" onsubmit="return confirm('Yakin ingin menghapus data {{ $isiBuku->judul_buku }}?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus data">
+                                        🗑️ Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

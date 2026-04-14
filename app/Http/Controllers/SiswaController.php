@@ -2,26 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Siswa;
+use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
-    public function siswatampil()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
         $siswa = Siswa::all();
 
         return view('siswa/siswatampil', ['datasiswa' => $siswa]);
     }
 
-    public function siswatambah()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         return view('siswa/siswatambah');
     }
 
-    public function siswastore(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        Siswa::create([
+         Siswa::create([
             'nis' => $request->nis,
             'nama' => $request->nama,
             'kelas' => $request->kelas,
@@ -32,16 +41,30 @@ class SiswaController extends Controller
         return redirect('/siswa');
     }
 
-    public function siswaedit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Siswa $siswa)
     {
-        $siswa = Siswa::where('id_siswa', $id)->get();
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Siswa $siswa)
+    {
+        $siswa = Siswa::where('id_siswa', $siswa->id_siswa)->get();
 
         return view('siswa/siswaedit', ['datasiswa' => $siswa]);
     }
 
-    public function siswaupdate(Request $request)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Siswa $siswa)
     {
-        Siswa::where('id_siswa', $request->id)->update([
+       Siswa::where('id_siswa', $request->id)->update([
             'nis' => $request->nis,
             'nama' => $request->nama,
             'kelas' => $request->kelas,
@@ -52,9 +75,12 @@ class SiswaController extends Controller
         return redirect('/siswa');
     }
 
-    public function siswahapus($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Siswa $siswa)
     {
-        Siswa::where('id_siswa', $id)->delete();
+       Siswa::where('id_siswa', $siswa->id_siswa)->delete();
 
         return redirect('/siswa');
     }

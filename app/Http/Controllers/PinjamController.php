@@ -1,35 +1,45 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Pinjam;
+
 use App\Models\Pinjamdetail;
 use App\Models\Siswa;
-use App\Models\Petugas;
 use App\Models\Buku;
+use App\Models\Petugas;
+use App\Models\Pinjam;
 use Illuminate\Http\Request;
 
 class PinjamController extends Controller
 {
-    public function pinjamtampil()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $datapinjam = Pinjam::with('siswa', 'petugas', 'pinjamdetail.buku')->get();
-        return view('pinjam/pinjamtampil', ['datapinjam' => $datapinjam]);
+        $datapinjam = Pinjam::all();
+        return view('pinjam.pinjamtampil', ['datapinjam' => $datapinjam]);
     }
 
-    public function pinjamtambah()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         $siswa = Siswa::all();
         $petugas = Petugas::all();
-        $buku = Buku::with('penulis')->get(); 
-        
+        $buku = Buku::with('penulis')->get();
+
         return view('pinjam/pinjamtambah', [
-            'datasiswa' => $siswa, 
-            'datapetugas' => $petugas, 
+            'datasiswa' => $siswa,
+            'datapetugas' => $petugas,
             'databuku' => $buku
         ]);
     }
 
-    public function pinjamstore(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $request->validate([
             'id_siswa' => 'required|exists:tbl_siswa,id_siswa',
@@ -58,22 +68,36 @@ class PinjamController extends Controller
         return redirect('/pinjam')->with('success', 'Data peminjaman berhasil ditambahkan!');
     }
 
-    public function pinjamedit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Pinjam $pinjam)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
         $pinjam = Pinjam::with('pinjamdetail')->where('id_pinjam', $id)->firstOrFail();
         $siswa = Siswa::all();
         $petugas = Petugas::all();
         $buku = Buku::with('penulis')->get();
-        
+
         return view('pinjam/pinjamedit', [
-            'pinjam' => $pinjam, 
-            'datasiswa' => $siswa, 
-            'datapetugas' => $petugas, 
+            'pinjam' => $pinjam,
+            'datasiswa' => $siswa,
+            'datapetugas' => $petugas,
             'databuku' => $buku
         ]);
     }
 
-    public function pinjamupdate(Request $request)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
         $request->validate([
             'id_pinjam' => 'required|exists:tbl_pinjam,id_pinjam',
@@ -102,14 +126,17 @@ class PinjamController extends Controller
             ]);
         }
 
-        return redirect('/pinjam')->with('success', 'Data peminjaman berhasil diupdate!');
+        return redirect('/pinjam')->with('success', 'Data peminjaman berhasil diperbarui!');
     }
 
-    public function pinjamhapus($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
     {
-        Pinjamdetail::where('id_pinjam', $id)->delete();
-
-        Pinjam::where('id_pinjam', $id)->delete();
+        $pinjam = Pinjam::where('id_pinjam', $id)->firstOrFail();
+        Pinjamdetail::where('id_pinjam', $pinjam->id_pinjam)->delete();
+        Pinjam::where('id_pinjam', $pinjam->id_pinjam)->delete();
 
         return redirect('/pinjam')->with('success', 'Data peminjaman berhasil dihapus!');
     }
@@ -119,7 +146,7 @@ class PinjamController extends Controller
         $pinjam = Pinjam::with('siswa', 'petugas', 'pinjamdetail.buku')
                         ->where('id_pinjam', $id)
                         ->firstOrFail();
-                        
+
         return view('pinjam/pinjamdetail', ['pinjam' => $pinjam]);
     }
 }

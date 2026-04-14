@@ -15,12 +15,12 @@
         </div>
 
         <a href="/index" class="back-link mb-3 d-inline-block">← Kembali ke Home</a>
-        
+
         <div class="header-actions d-flex justify-content-between align-items-center mb-4">
             <div class="text-muted">
                 <strong>Total Siswa:</strong> {{ count($datasiswa) }} orang
             </div>
-            <a href="/siswa/tambah" class="btn btn-primary">
+            <a href="/siswa/create" class="btn btn-primary">
                 <strong>+</strong> Tambah Siswa Baru
             </a>
         </div>
@@ -50,17 +50,18 @@
                         <td>{{ $siswa->no_hp }}</td>
                         <td>
                             <div class="action-buttons justify-content-center text-center">
-                                <a href="/siswa/edit/{{ $siswa->id_siswa }}" 
+                                <a href="/siswa/{{ $siswa->id_siswa }}/edit"
                                    class="btn btn-success btn-sm"
                                    title="Edit data">
                                     ✏️ Edit
                                 </a>
-                                <a href="/siswa/hapus/{{ $siswa->id_siswa }}" 
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus data {{ $siswa->nama }}?')"
-                                   title="Hapus data">
-                                    🗑️ Hapus
-                                </a>
+                                <form action="/siswa/{{ $siswa->id_siswa }}" method="POST" class="d-inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus data">
+                                        🗑️ Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -10,14 +10,14 @@
 <body class="form-page">
     <div class="container p-5" style="max-width: 600px;">
         <a href="/buku" class="back-link">← Kembali ke Daftar Buku</a>
-        
+
         <div class="form-icon">📝</div>
         <h1 class="mb-2">Tambah Data Buku</h1>
         <p class="form-description">Lengkapi formulir di bawah ini</p>
 
-        <form action="/buku/store" method="POST">
+        <form action="/buku" method="POST">
             @csrf
-            
+
             <div class="mb-3">
                 <label for="kode_buku" class="form-label"><strong>Kode Buku</strong></label>
                 <input type="text" class="form-control" id="kode_buku" name="kode_buku" placeholder="Masukkan kode buku" required>

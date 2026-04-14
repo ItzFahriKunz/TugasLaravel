@@ -10,7 +10,7 @@
 <body class="form-page">
     <div class="container p-5" style="max-width: 600px;">
         <a href="/penulis" class="back-link">← Kembali ke Daftar Penulis</a>
-        
+
         <div class="form-icon">✏️</div>
         <h1 class="mb-2">Edit Data Penulis</h1>
         <p class="form-description">Perbarui data penulis sesuai kebutuhan</p>
@@ -18,9 +18,10 @@
             📋 Mengedit data penulis: <strong>{{ $penulis->nama_penulis }}</strong>
         </div>
 
-        <form action="/penulis/update" method="post">
+        <form action="/penulis/{{ $penulis->id_penulis }}" method="post">
             @csrf
-            
+            @method('PUT')
+
             <div class="mb-3">
                 <label for="nama_penulis" class="form-label"><strong>Nama Penulis</strong></label>
                 <input type="text" class="form-control" id="nama_penulis" name="nama_penulis" value="{{ $penulis->nama_penulis }}" required>

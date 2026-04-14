@@ -8,6 +8,8 @@ class Petugas extends Model
 {
     protected $table = 'tbl_petugas';
     protected $primaryKey = 'id_petugas';
+    public $incrementing = true;
+    protected $keyType = 'int';
     protected $fillable = [
                             'id_petugas',
                             'nip',

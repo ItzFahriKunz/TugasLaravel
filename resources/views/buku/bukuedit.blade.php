@@ -10,33 +10,34 @@
 <body class="form-page">
     <div class="container p-5" style="max-width: 600px;">
         <a href="/buku" class="back-link">← Kembali ke Daftar Buku</a>
-        
+
         <div class="form-icon">✏️</div>
         <h1 class="mb-2">Edit Data Buku</h1>
         <p class="form-description">Perbarui data buku sesuai kebutuhan</p>
 
         <div class="alert alert-info info-badge mb-4">
-            📋 Mengedit data buku: <strong>{{ $buku->judul_buku }}</strong>
+            📋 Mengedit data buku: <strong>{{ $databuku->judul_buku }}</strong>
         </div>
 
-        <form action="/buku/update" method="POST">
+        <form action="/buku" method="POST">
             @csrf
+            @method('PUT')
 
-            <input type="hidden" name="id_buku" value="{{ $buku->id_buku }}">
-            
+            <input type="hidden" name="id_buku" value="{{ $databuku->id_buku }}">
+
             <div class="mb-3">
                 <label for="kode_buku" class="form-label"><strong>Kode Buku</strong></label>
-                <input type="text" class="form-control" id="kode_buku" name="kode_buku" value="{{ $buku->kode_buku }}" placeholder="Masukkan kode buku" required>
+                <input type="text" class="form-control" id="kode_buku" name="kode_buku" value="{{ $databuku->kode_buku }}" placeholder="Masukkan kode buku" required>
             </div>
 
             <div class="mb-3">
                 <label for="judul_buku" class="form-label"><strong>Judul Buku</strong></label>
-                <input type="text" class="form-control" id="judul_buku" name="judul_buku" value="{{ $buku->judul_buku }}" placeholder="Masukkan judul buku" required>
+                <input type="text" class="form-control" id="judul_buku" name="judul_buku" value="{{ $databuku->judul_buku }}" placeholder="Masukkan judul buku" required>
             </div>
 
             <div class="mb-3">
                 <label for="stok_buku" class="form-label"><strong>Stok Buku</strong></label>
-                <input type="number" class="form-control" id="stok_buku" name="stok_buku" value="{{ $buku->stok_buku }}" placeholder="Masukkan stok buku" required>
+                <input type="number" class="form-control" id="stok_buku" name="stok_buku" value="{{ $databuku->stok_buku }}" placeholder="Masukkan stok buku" required>
             </div>
 
             <div class="mb-3">
@@ -44,7 +45,7 @@
                 <select class="form-select" id="id_penulis" name="id_penulis" required>
                     <option value="">Pilih Penulis</option>
                     @foreach ($penulis as $item)
-                        <option value="{{ $item->id_penulis }}" {{ $item->id_penulis == $buku->id_penulis ? 'selected' : '' }}>{{ $item->nama_penulis }}</option>
+                        <option value="{{ $item->id_penulis }}" {{ $item->id_penulis == $databuku->id_penulis ? 'selected' : '' }}>{{ $item->nama_penulis }}</option>
                     @endforeach
                 </select>
             </div>
@@ -54,7 +55,7 @@
                 <select class="form-select" id="id_penerbit" name="id_penerbit" required>
                     <option value="">Pilih Penerbit</option>
                     @foreach ($penerbit as $item)
-                        <option value="{{ $item->id_penerbit }}" {{ $item->id_penerbit == $buku->id_penerbit ? 'selected' : '' }}>{{ $item->nama_penerbit }}</option>
+                        <option value="{{ $item->id_penerbit }}" {{ $item->id_penerbit == $databuku->id_penerbit ? 'selected' : '' }}>{{ $item->nama_penerbit }}</option>
                     @endforeach
                 </select>
             </div>

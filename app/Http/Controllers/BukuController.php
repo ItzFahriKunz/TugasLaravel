@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Buku;
 use App\Models\Penulis;
 use App\Models\Penerbit;
+use App\Models\Buku;
 use Illuminate\Http\Request;
 
 class BukuController extends Controller
 {
-    public function bukutampil()
+
+    public function index()
     {
-        $databuku = Buku::with(['penulis', 'penerbit'])->get();
-        return view('buku/bukutampil', ['databuku' => $databuku]);
+        $databuku = Buku::all();
+        return view('buku.bukutampil', ['databuku' => $databuku]);
     }
 
-    public function bukutambah()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         $penulis = Penulis::all();
         $penerbit = Penerbit::all();
-        return view('buku/bukutambah', ['penulis' => $penulis, 'penerbit' => $penerbit]);
+        return view('buku.bukutambah', ['penulis' => $penulis, 'penerbit' => $penerbit]);
     }
 
-    public function bukustore(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         Buku::create([
-            'kode_buku' => $request->kode_buku,
             'judul_buku' => $request->judul_buku,
-            'stok_buku' => $request->stok_buku,
+            'isbn' => $request->isbn,
             'id_penulis' => $request->id_penulis,
             'id_penerbit' => $request->id_penerbit
         ]);
@@ -35,20 +41,33 @@ class BukuController extends Controller
         return redirect('/buku');
     }
 
-    public function bukuedit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Buku $buku)
     {
-        $buku = Buku::where('id_buku', $id)->first();
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $buku = Buku::where('id_buku', $id)->firstOrFail();
         $penulis = Penulis::all();
         $penerbit = Penerbit::all();
-        return view('buku/bukuedit', ['buku' => $buku, 'penulis' => $penulis, 'penerbit' => $penerbit]);
+        return view('buku.bukuedit', ['databuku' => $buku, 'penulis' => $penulis, 'penerbit' => $penerbit]);
     }
 
-    public function bukuupdate(Request $request)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
-        Buku::where('id_buku', $request->id_buku)->update([
-            'kode_buku' => $request->kode_buku,
+        Buku::where('id_buku', $id)->update([
             'judul_buku' => $request->judul_buku,
-            'stok_buku' => $request->stok_buku,
+            'isbn' => $request->isbn,
             'id_penulis' => $request->id_penulis,
             'id_penerbit' => $request->id_penerbit
         ]);
@@ -56,7 +75,10 @@ class BukuController extends Controller
         return redirect('/buku');
     }
 
-    public function bukuhapus($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
     {
         Buku::where('id_buku', $id)->delete();
         return redirect('/buku');

@@ -20,6 +20,6 @@ class Pinjamdetail extends Model
 
     public function buku()
     {
-        return $this->belongsTo(Buku::class, 'id_buku', 'id_buku');
+        return $this->belongsTo(Buku::class, 'id_buku', 'id_buku')->withTrashed();
     }
 }

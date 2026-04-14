@@ -15,12 +15,12 @@
         </div>
 
         <a href="/index" class="back-link mb-3 d-inline-block">← Kembali ke Home</a>
-        
+
         <div class="header-actions d-flex justify-content-between align-items-center mb-4">
             <div class="text-muted">
                 <strong>Total Petugas:</strong> {{ count($datapetugas) }} orang
             </div>
-            <a href="/petugas/tambah" class="btn btn-primary">
+            <a href="/petugas/create" class="btn btn-primary">
                 <strong>+</strong> Tambah Petugas Baru
             </a>
         </div>
@@ -46,17 +46,18 @@
                         <td>{{ $isiPetugas->no_hp_petugas }}</td>
                         <td>
                             <div class="action-buttons text-center justify-content-center">
-                                <a href="/petugas/edit/{{ $isiPetugas->id_petugas }}" 
+                                <a href="/petugas/{{ $isiPetugas->id_petugas }}/edit"
                                    class="btn btn-success btn-sm"
                                    title="Edit data">
                                     ✏️ Edit
                                 </a>
-                                <a href="/petugas/hapus/{{ $isiPetugas->id_petugas }}" 
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus data {{ $isiPetugas->nama_petugas }}?')"
-                                   title="Hapus data">
-                                    🗑️ Hapus
-                                </a>
+                                <form action="/petugas/{{ $isiPetugas->id_petugas }}" method="POST" class="d-inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus data">
+                                        🗑️ Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

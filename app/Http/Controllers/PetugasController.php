@@ -1,26 +1,35 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Petugas;
 use Illuminate\Http\Request;
 
 class PetugasController extends Controller
 {
-   public function petugastampil()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
         $petugas = Petugas::all();
-
-        return view('petugas/petugastampil', ['datapetugas' => $petugas]);
+        return view('petugas.petugastampil', ['datapetugas' => $petugas]);
     }
 
-    public function petugastambah()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return view('petugas/petugastambah');
+        return view('petugas.petugastambah');
     }
 
-    public function petugasstore(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        Petugas::create([
+         Petugas::create([
             'nip' => $request->nip,
             'nama_petugas' => $request->nama_petugas,
             'no_hp_petugas' => $request->no_hp_petugas
@@ -29,16 +38,29 @@ class PetugasController extends Controller
         return redirect('/petugas');
     }
 
-    public function petugasedit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Petugas $petugas)
     {
-        $petugas = Petugas::where('id_petugas', $id)->get();
+        //
+    }
 
-        return view('petugas/petugasedit', ['datapetugas' => $petugas]);
-    }   
-
-    public function petugasupdate(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
-        Petugas::where('id_petugas', $request->id)->update([
+        $petugas = Petugas::where('id_petugas', $id)->firstOrFail();
+        return view('petugas.petugasedit', ['datapetugas' => $petugas]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+            Petugas::where('id_petugas', $id)->update([
             'nip' => $request->nip,
             'nama_petugas' => $request->nama_petugas,
             'no_hp_petugas' => $request->no_hp_petugas,
@@ -47,10 +69,12 @@ class PetugasController extends Controller
         return redirect('/petugas');
     }
 
-    public function petugashapus($id)
-    {
+    /**
+     * Remove the specified resource from storage.
+     */
+        public function destroy($id)
+        {
         Petugas::where('id_petugas', $id)->delete();
-
         return redirect('/petugas');
     }
 }

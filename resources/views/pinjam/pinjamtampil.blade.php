@@ -17,12 +17,12 @@
         </div>
 
         <a href="/index" class="back-link mb-3 d-inline-block">← Kembali ke Home</a>
-        
+
         <div class="header-actions d-flex justify-content-between align-items-center mb-4">
             <div class="text-muted">
                 <strong>Total Peminjaman:</strong> {{ count($datapinjam) }} transaksi
             </div>
-            <a href="/pinjam/tambah" class="btn btn-primary">
+            <a href="/pinjam/create" class="btn btn-primary">
                 <strong>+</strong> Tambah Peminjaman Baru
             </a>
         </div>
@@ -66,17 +66,18 @@
                         </td>
                         <td>
                             <div class="action-buttons justify-content-center text-center">
-                                <a href="/pinjam/edit/{{ $pinjam->id_pinjam }}" 
+                                <a href="/pinjam/{{ $pinjam->id_pinjam }}/edit"
                                    class="btn btn-success btn-sm"
                                    title="Edit data">
                                     ✏️ Edit
                                 </a>
-                                <a href="/pinjam/hapus/{{ $pinjam->id_pinjam }}" 
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus peminjaman atas nama {{ $pinjam->siswa->nama }}?\n\nBuku yang dipinjam:\n@foreach($pinjam->pinjamdetail as $detail)- {{ $detail->buku->judul_buku }}\n@endforeach')"
-                                   title="Hapus data">
-                                    🗑️ Hapus
-                                </a>
+                                <form action="/pinjam/{{ $pinjam->id_pinjam }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus peminjaman atas nama {{ $pinjam->siswa->nama }}?\n\nBuku yang dipinjam:\n@foreach($pinjam->pinjamdetail as $detail)- {{ $detail->buku->judul_buku }}\n@endforeach')" title="Hapus data">
+                                        🗑️ Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

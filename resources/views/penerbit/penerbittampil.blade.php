@@ -15,12 +15,12 @@
         </div>
 
         <a href="/index" class="back-link mb-3 d-inline-block">← Kembali ke Home</a>
-        
+
         <div class="header-actions d-flex justify-content-between align-items-center mb-4">
             <div class="text-muted">
-                <strong>Total Penerbit:</strong> {{ count($penerbit) }} penerbit
+                <strong>Total Penerbit:</strong> {{ count($datapenerbit) }} penerbit
             </div>
-            <a href="/penerbit/tambah" class="btn btn-primary">
+            <a href="/penerbit/create" class="btn btn-primary">
                 <strong>+</strong> Tambah Penerbit Baru
             </a>
         </div>
@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                     @php $no = 1; @endphp
-                    @forelse ($penerbit as $isiPenerbit)
+                    @forelse ($datapenerbit as $isiPenerbit)
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td><strong>{{ $isiPenerbit->nama_penerbit }}</strong></td>
@@ -46,17 +46,18 @@
                         <td><span class="badge bg-secondary">{{ $isiPenerbit->isbn }}</span></td>
                         <td>
                             <div class="action-buttons text-center justify-content-center">
-                                <a href="/penerbit/edit/{{ $isiPenerbit->id_penerbit }}" 
+                                <a href="/penerbit/{{ $isiPenerbit->id_penerbit }}/edit"
                                    class="btn btn-success btn-sm"
                                    title="Edit data">
                                     ✏️ Edit
                                 </a>
-                                <a href="/penerbit/hapus/{{ $isiPenerbit->id_penerbit }}" 
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Yakin ingin menghapus data {{ $isiPenerbit->nama_penerbit }}?')"
-                                   title="Hapus data">
-                                    🗑️ Hapus
-                                </a>
+                                <form action="/penerbit/{{ $isiPenerbit->id_penerbit }}" method="POST" class="d-inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus data">
+                                        🗑️ Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
